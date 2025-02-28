@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación Web </title>
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #9b4dca, #6a006a);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        header:hover {
+            transform: translateY(-5px);
+        }
+
+        .nav__title {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #ffebff;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .btn-container-wrapper {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .btn-container-wrapper:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-morado {
+            background: linear-gradient(135deg, #9b10ff, #6a008a);
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px 45px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            width: 220px;
+        }
+
+        .btn-morado:hover {
+            background: linear-gradient(135deg, #6a006a, #320032);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-morado:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffccff;
+            margin-bottom: 10px; /* Agrega margen inferior */
+            display: block;
+        }
+
+        input[type="text"] {
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            width: 250px;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #9b4dca, #6a006a);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+        }
+
+        .image-wrapper {
+            margin-top: 20px; /* Espacio entre el texto y la imagen */
+            margin-bottom: 20px; /* Espacio entre la imagen y el formulario */
+        }
+
+        .image-wrapper img {
+            width: 100%; /* Ajusta el tamaño al contenedor */
+            max-width: 300px; /* Tamaño máximo de la imagen */
+            border-radius: 10px; /* Bordes redondeados */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para la imagen */
+        }
+    </style>
+</head>
+    <body>
+        <h1>Encuentra tus archivos en segundos</h1>
+        <div class="image-wrapper">
+            <img src="GatoIntelectual.jpg" alt="Imagen representativa de búsqueda">
+        </div>        
+        <form action="/hello">
+            <label for="name">Escribe el nombre del archivo que deseas visualizar: </label><br>
+            <input type="text" id="name" name="name" placeholder="Ejemplo: prueba.txt"><br><br>
+            <input type="button" class="btn-morado" value="Buscar" onclick="loadGetMsg()">
+        </form> 
+        <div id="getrespmsg", class="btn-container-wrapper"></div>
+
+        <script>
+            function loadGetMsg() {
+                let nameVar = document.getElementById("name").value;
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    const contentType = xhttp.getResponseHeader("Content-Type");
+                    if (contentType.startsWith("image/")) {
+                        const blob = new Blob([this.response], { type: contentType });
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(blob);
+                        document.getElementById("getrespmsg").innerHTML = '';
+                        document.getElementById("getrespmsg").appendChild(img);
+                    } else {
+                        const text = new TextDecoder("utf-8").decode(this.response);
+                        document.getElementById("getrespmsg").innerHTML = text;
+                    }
+                }
+                //Query = consulta, porque lo que va después del ? es el query
+                xhttp.open("GET", "/hello?name=" + nameVar);
+                xhttp.responseType = 'arraybuffer'; // Set the response type to arraybuffer for binary data
+                xhttp.send();
+            }
+        </script>
+    </body>
+</html>
