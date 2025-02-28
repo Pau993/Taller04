@@ -1,8 +1,8 @@
-# Desarrollo de marcos web para servicios REST y gestión de archivos estáticos
+# Desarrollo de marcos web para servicios REST y gestión de archivos estáticos 💻
 
-En este laboratorio exploraremos el desarrollo de frameworks web para servicios REST. Para ello, utilizaremos los recursos obtenidos en el Taller 01, integrándolos a los requisitos principales de este nuevo proyecto.
+En este laboratorio exploraremos el desarrollo de frameworks web para servicios REST y así mismo la desplegaremos en aws usando EC2 y Docker. Para ello, utilizaremos los recursos obtenidos en el Taller 01, Taller 02 y Taller 03, realizando una mejora para que el framework sea concurrente y así mismo se pueda apagar de manera elegante.
 
-Este framework incluirá herramientas que permitirán definir servicios REST mediante funciones Lambda, gestionar valores en las consultas (Query Parameters) y especificar la ubicación de archivos estáticos.
+Este framework incluirá herramientas que permitirán definir servicios REST mediante funciones Lambda, gestionar valores en las consultas (Query Parameters) y especificar la ubicación de archivos estáticos, se implementó métodos para apagar el servidor de manera elegante; es decir, cerrar correctamente todos los recursos antes de detenerse, evitando errores o conexiónes colgadas.
 
 Este proyecto nos ayudará a comprender los fundamentos del desarrollo de frameworks web para servicios REST, permitiéndonos:
 
@@ -10,12 +10,14 @@ Este proyecto nos ayudará a comprender los fundamentos del desarrollo de framew
 * Explorar el uso de funciones Lambda en la definición de servicios REST.
 * Manejar parámetros de consulta (Query Parameters) para personalizar las respuestas del servicio.
 * Especificar la ubicación de archivos estáticos, facilitando el acceso a recursos como imágenes, scripts y hojas de estilo.
+* Si hay solicitudes en proceso, permitir que terminen antes de cerrar.
+* Cuando el servidor se detiene, debe liberar el puerto correctamente.
 
 ## Descripción de la aplicación 📖
 
-La aplicación es un microframework en Java que configura y ejecuta un servidor HTTP simple. Este microframework proporciona una forma sencilla de configurar y ejecutar un servidor HTTP con rutas básicas y soporte para archivos estáticos.
+La aplicación es un microframework en Java que configura y ejecuta un servidor HTTP simple y concurrente sin necesidad de frameworks externos como Spring o Spark. Este microframework proporciona una forma sencilla de configurar y ejecutar un servidor HTTP con soporte para rutas dinámicas, invocación reflejada de controladores y manejo de archivos estáticos.
 
-## Diagrama de Arquitectura
+## Diagrama de Arquitectura ☁️
 
 * Usuario (User):
 
@@ -29,7 +31,7 @@ Realiza solicitudes HTTP al servidor en busca de recursos como archivos HTML, Ja
 Es el servidor que recibe y procesa las solicitudes HTTP enviadas por el navegador.
 Se encuentra dentro de un "grupo genérico", lo que indica que puede formar parte de una infraestructura más amplia.
 
-El navegador envía varias solicitudes HTTP al servidor en el puerto 35000 para diferentes rutas:
+El navegador envía varias solicitudes HTTP al servidor en el puerto 35000 para diferentes rutas: 🛜
 
 * /script.js: Solicitud para obtener un archivo de JavaScript.
 * /index.html: Solicitud para cargar el archivo principal de la página web.
@@ -38,7 +40,7 @@ El navegador envía varias solicitudes HTTP al servidor en el puerto 35000 para 
 * Recursos (Archivos estáticos): Almacenados en el servidor, servidos a través de rutas específicas.
 * Comunicación: Protocolo HTTP entre el cliente y el servidor.
 
-El servidor procesa estas solicitudes y responde con los recursos correspondientes desde su sistema de archivos.
+El servidor procesa estas solicitudes y responde con los recursos correspondientes desde su sistema de archivos. 🌐
 
 * Servidor HTTP: Clase HttpServer que maneja solicitudes HTTP.
 * Manejo de rutas: Clase Route para mapear rutas específicas a manejadores.
@@ -48,11 +50,16 @@ El servidor procesa estas solicitudes y responde con los recursos correspondient
 * Archivos estáticos: Recursos en la carpeta resources/Files (HTML, CSS, imágenes, etc.).
 * API REST: Endpoints definidos en HttpServer para manejar /api/saludo, /api/fecha, etc.
 * Pruebas: Clases de prueba con JUnit para validar el comportamiento del servidor.
+  
+* Docker: ⌨️
+Los servicios están contenedorizados y desplegados en entornos Docker.
 
-![image](https://github.com/user-attachments/assets/ee3336ae-1ca3-40f2-883f-e43ccb439cce)
+* Despliege en la nube: ☁️
+La comunicación HTTP final. Aquí es donde los servicios pueden estar alojados en un entorno de cloud computing como AWS
 
+![Diagrama en blanco (2)](https://github.com/user-attachments/assets/c4e1dff5-09ec-4b25-b25d-4d3bd9998acf)
 
-## Diagrama de Clase
+## Diagrama de Clase 💡
 
 Este diagrama de clases representa la arquitectura de un microframework para servicios REST, dividiendo la funcionalidad en varias clases e interfaces.
 
@@ -60,6 +67,9 @@ Las clases principales (Request, Response, HttpServer) manejan las solicitudes, 
 
 ![image](https://github.com/user-attachments/assets/26319417-3811-4ad4-8b30-28ff1de7ccc5)
 
+No se realizó cambios al diagrama de clases, ya que se modificó métodos dentro de las clases. 
+
+![image](https://github.com/user-attachments/assets/950f24b4-866d-4ddb-955e-c3649fb10bb9)
 
 ## Comenzando 🚀
 
@@ -81,9 +91,9 @@ Las siguientes instrucciones le permitirán obtener una copia del proyecto en fu
 Realice los siguientes pasos para clonar el proyecto en su máquina local.
 
 ```
-git clone https://github.com/Pau993/Taller02.git
-cd Taller02
-git checkout Taller02
+git clone https://github.com/Pau993/Taller04.git
+cd Taller04
+git checkout Taller04
 mvn clean compile
 ```
 
@@ -148,9 +158,16 @@ Esta prueba verifica que el servidor HTTP maneje correctamente una solicitud a l
 
 ## Muestra de la aplicación 🧩
 
+### Docker: 📡
 
-https://github.com/user-attachments/assets/7a3b86a6-4797-40f4-b374-aaf98f08355d
+https://github.com/user-attachments/assets/bc11055e-1252-452d-9d4c-353277feddb6
 
+
+### Despliegue en AWS: ☁️
+
+https://github.com/user-attachments/assets/da33cd2a-90f2-45b9-9ca4-f30a140ed4b6
+
+Se optive el IpV4 y se despleg+o satisfactoriamente.
 
 ## Autores ✒️
 
